@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    
+    <!-- 회사소개 -->
+    <definition name="/shopinfo/company" extends="baseLayout">
+       <put-attribute name="title" value="shopinfo 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/shopinfo/company.jsp" />
+    </definition>
+     <!-- 이용약관 -->
+    <definition name="/shopinfo/agreement" extends="baseLayout">
+       <put-attribute name="title" value="agreement 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/shopinfo/agreement.jsp" />
+    </definition>   
+     <!-- 개인정보취급방침 -->
+    <definition name="/shopinfo/privacy" extends="baseLayout">
+       <put-attribute name="title" value="privacy 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/shopinfo/privacy.jsp" />
+    </definition>
+   
+    <!-- 이용안내 -->
+    <definition name="/shopinfo/guide" extends="baseLayout">
+       <put-attribute name="title" value="guide 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/shopinfo/guide.jsp" />
+    </definition>
+
+    <!-- 고객만족센터 -->
+    <definition name="/shopinfo/cscenter" extends="baseLayout">
+       <put-attribute name="title" value="cscenter 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/shopinfo/cscenter.jsp" />
+    </definition>
+</tiles-definitions>
+
+

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.company">
+<!-- 리절트 맵 정의 -->	
+
+
+	<resultMap id="companyResult" type="CompanyVO">
+		<result property="company_id" column="company_id" />
+		
+		<result property="goods_id" column="goods_id" />
+		<result property="business_registration_number" column="business_registration_number" />
+		<result property="company_name" column="company_name" />
+		<result property="representative_name" column="representative_name" />
+		<result property="zipcode" column="zipcode" />
+		<result property="roadAddress" column="roadAddress" />
+		<result property="jibunAddress" column="jibunAddress" />
+		<result property="namujiAddress" column="namujiAddress" />
+
+		<result property="business_type" column="business_type" />
+		
+		<result property="business_item" column="business_item" />
+		<result property="corporation_registration_number" column="corporation_registration_number" />
+		<result property="industry_code" column="industry_code" />
+		<result property="industry_name" column="industry_name" />
+		<result property="telephone" column="telephone" />
+		<result property="fax" column="fax" />
+		<result property="email" column="email" />
+		
+		<result property="license_number" column="license_number" />
+		<result property="del_yn" column="del_yn" />
+		<result property="license_date" column="license_date" />
+ 
+	</resultMap>	
+
+	<resultMap id="imageResult" type="ImageFileVO">
+	   <result property="goods_id" column="goods_id" />
+	   <result property="fileName" column="fileName" />
+	   <result property="reg_id" column="reg_id" />
+	   <result property="image_id" column="image_id" />
+	   <result property="fileType" column="fileType" />
+	</resultMap>
+<select id="selectCompanyList" resultMap="companyResult"   parameterType="java.util.HashMap"  >
+	select  
+		company_id,
+ 
+		business_registration_number,
+		company_name,
+		representative_name,
+		zipcode,
+		roadAddress,
+		jibunAddress,
+		namujiAddress,
+
+		business_type,
+		business_item,
+		corporation_registration_number,
+		industry_code,
+		industry_name,			          
+		telephone,
+		fax,
+		email,
+		license_number,
+ 		          
+
+		date_format(license_date,'%Y-%m-%d')  as license_date,
+		del_yn
+	from companytest
+ 
+			order by company_id desc
+	limit #{offset}, 10
+      
+	</select>
+
+ 
+	<select id="selectCountCompany" resultType="String" parameterType="CompanyVO">
+	    <![CDATA[
+		    select decode(count(*), 0, 'false', 'true') from company
+			where company_id=#{company_id}
+ 
+
+    	]]>
+	</select>
+
+	<insert id="insertCompany" parameterType="CompanyVO">
+	    <![CDATA[
+		    	insert into company(company_id,
+		    	                           business_registration_number,
+		    	                           company_name)
+		        				 values(#{company_id},
+    							        #{business_registration_number},
+    							        #{company_name})
+    	]]>
+	</insert>
+
+	<update id="updateCompany" parameterType="CompanyVO">
+	    <![CDATA[
+			update company
+ 
+		 	       where company_id=#{company_id}
+
+    	]]>
+	</update>
+	<delete id="deleteCompany" parameterType="int">
+	    <![CDATA[
+	      delete from company
+	      where company_id=#{company_id}
+    	]]>
+	</delete>
+	
+ 
+	         <!-- For oracleDB 
+	         
+	         select t.*
+          from(
+			select g.*,d.fileName from t_shopping_goods g, t_goods_detail_image d
+        	where g.goods_id=d.goods_id 
+        	and d.filetype='main_image'
+        	and goods_status=#{companyStatus}
+            order by g.goods_creDate desc)  t
+	             where   rowNum <16 
+	             
+	             -->   
+	             <!-- For mariaDB
+
+	             select t.*
+          from(
+			select g.*,d.fileName from t_shopping_goods g, t_goods_detail_image d
+        	where g.goods_id=d.goods_id 
+        	and d.filetype='main_image'
+        	and goods_status=#{companyStatus}
+            order by g.goods_creDate desc 
+            limit 15
+             )  t 
+             -->
+
+	
+	<select id="selectCompanyDetail" resultMap="companyResult"   parameterType="String"  >
+	    <![CDATA[
+		     select company
+	        where  
+			 company_id=#{company_id}
+	        order by company_id
+    	]]>
+	</select>
+	<select id="selectCompanyDetailImage" resultMap="imageResult"   parameterType="String"  >
+	    <![CDATA[
+		    	select * from  t_goods_detail_image 
+		    	where  fileType!='main_image'
+				and goods_id=#{goods_id}
+    	]]>
+	</select>
+	
+   <select id="selectCompanyBySearchWord" resultMap="companyResult"   parameterType="String"  >
+     <![CDATA[
+				select g.*,d.fileName from t_shopping_goods g, t_goods_detail_image d
+		    where g.goods_id=d.goods_id
+		    and d.filetype='main_image'
+		    and g.goods_title like '%'|| #{searchWord} || '%'
+		    order by g.goods_creDate desc
+		]]>
+	</select>	
+	
+	<select id="selectKeywordSearch" resultType="String"   parameterType="String"  >
+	    <![CDATA[
+        select goods_title from t_shopping_goods 
+        where         
+        goods_title like '%'|| #{keyword} || '%'
+        order by goods_creDate desc
+		]]>
+	</select>
+	
+
+</mapper>

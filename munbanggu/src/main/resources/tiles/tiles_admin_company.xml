@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    
+    <!-- 회원관리 -->
+    <definition name="/admin/company/adminCompanyMain" extends="baseLayout">
+       <put-attribute name="title" value="Company 관리 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/admin/company/adminCompanyMain.jsp" />
+    </definition>
+    
+    <definition name="/admin/company/addCompanyDetail" extends="baseLayout">
+       <put-attribute name="title" value="Company 추가 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/admin/company/addCompanyDetail.jsp" />
+    </definition>    
+     <definition name="/admin/company/companyDetail" extends="baseLayout">
+       <put-attribute name="title" value="Company 변경 페이지" />
+       <put-attribute name="body" value="/WEB-INF/views/admin/company/companyDetail.jsp" />
+    </definition>       
+   
+</tiles-definitions>
+
+

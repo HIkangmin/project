@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.admin.company">
+<!-- 리절트 맵 정의 -->	
+	<resultMap id="companyResult" type="CompanyVO">
+		<result property="company_id" column="company_id" />
+		
+		<result property="goods_id" column="goods_id" />
+		<result property="business_registration_number" column="business_registration_number" />
+		<result property="company_name" column="company_name" />
+		<result property="representative_name" column="representative_name" />
+
+		<result property="zipcode" column="zipcode" />
+		<result property="roadAddress" column="roadAddress" />
+		<result property="jibunAddress" column="jibunAddress" />
+		<result property="namujiAddress" column="namujiAddress" />
+		
+		
+		<result property="business_type" column="business_type" />
+		
+		<result property="business_item" column="business_item" />
+		<result property="corporation_registration_number" column="corporation_registration_number" />
+		<result property="industry_code" column="industry_code" />
+		<result property="industry_name" column="industry_name" />
+		<result property="telephone" column="telephone" />
+		<result property="fax" column="fax" />
+		<result property="email" column="email" />
+		
+		<result property="license_number" column="license_number" />
+		<result property="del_yn" column="del_yn" />
+		<result property="license_date" column="license_date" />
+	</resultMap>
+
+	
+<select id="countSelectCompanyList" resultType="int"		parameterType="java.util.HashMap">
+		select count( company_id )
+		from companytest
+		where true
+		<if test="search_type=='all'">
+			and ( business_registration_number
+			||   company_name
+			||   representative_name
+			||   industry_code
+			||   roadAddress
+			||   jibunAddress
+			||   business_address
+			||   business_type
+			||   business_item
+			||   corporation_registration_number
+			||   industry_code
+			||   industry_name
+			||   telephone
+			||   fax
+			||   email
+			||   license_number
+			|| 	 license_date
+			||   etc		
+			)
+		</if>
+		<if test="search_type=='business_registration_number'">
+			and business_registration_number
+		</if>
+		<if test="search_type=='company_name'">
+			and company_name
+		</if>
+		<if test="search_type=='representative_name'">
+			and representative_name
+		</if>
+		<if test="search_type=='industry_code'">
+			and industry_code
+		</if>
+		<if test="search_type=='roadAddress'">
+			and roadAddress
+		</if>
+		<if test="search_type=='jibunAddress'">
+			and jibunAddress
+		</if>
+		<if test="search_type=='business_address'">
+			and business_address
+		</if>
+		<if test="search_type=='business_type'">
+			and business_type
+		</if>
+		<if test="search_type=='business_item'">
+			and business_item
+		</if>
+		<if test="search_type=='corporation_registration_number'">
+			and corporation_registration_number
+		</if>
+		<if test="search_type=='industry_code'">
+			and industry_code
+		</if>
+		<if test="search_type=='industry_name'">
+			and industry_name
+		</if>
+		<if test="search_type=='telephone'">
+			and telephone
+		</if>
+		<if test="search_type=='fax'">
+			and fax
+		</if>
+		<if test="search_type=='email'">
+			and email
+		</if>
+		<if test="search_type=='license_number'">
+			and license_number
+		</if>
+		<if test="search_type=='license_date'">
+			and license_date
+		</if>	
+		
+		like '%'|| #{search_word} || '%'
+		and license_date between #{beginDate} and (#{endDate} + interval 1 day		)
+	</select>
+
+	
+	<select id="listCompany" resultMap="companyResult"   parameterType="java.util.HashMap"  >
+		select *
+		from companytest
+		where true
+		<if test="search_type=='all'">
+			and ( business_registration_number
+			||   company_name
+			||   representative_name
+			||   industry_code
+			||   roadAddress
+			||   jibunAddress
+			||   business_address
+			||   business_type
+			||   business_item
+			||   corporation_registration_number
+			||   industry_code
+			||   industry_name
+			||   telephone
+			||   fax
+			||   email
+			||   license_number
+			|| 	 license_date
+			||   etc		
+			)
+		</if>
+		<if test="search_type=='business_registration_number'">
+			and business_registration_number
+		</if>
+		<if test="search_type=='company_name'">
+			and company_name
+		</if>
+		<if test="search_type=='representative_name'">
+			and representative_name
+		</if>
+		<if test="search_type=='industry_code'">
+			and industry_code
+		</if>
+		<if test="search_type=='roadAddress'">
+			and roadAddress
+		</if>
+		<if test="search_type=='jibunAddress'">
+			and jibunAddress
+		</if>
+		<if test="search_type=='business_address'">
+			and business_address
+		</if>
+		<if test="search_type=='business_type'">
+			and business_type
+		</if>
+		<if test="search_type=='business_item'">
+			and business_item
+		</if>
+		<if test="search_type=='corporation_registration_number'">
+			and corporation_registration_number
+		</if>
+		<if test="search_type=='industry_code'">
+			and industry_code
+		</if>
+		<if test="search_type=='industry_name'">
+			and industry_name
+		</if>
+		<if test="search_type=='telephone'">
+			and telephone
+		</if>
+		<if test="search_type=='fax'">
+			and fax
+		</if>
+		<if test="search_type=='email'">
+			and email
+		</if>
+		<if test="search_type=='license_number'">
+			and license_number
+		</if>
+		<if test="search_type=='license_date'">
+			and license_date
+		</if>	
+		
+		like '%'|| #{search_word} || '%'
+		and license_date between #{beginDate} and (#{endDate} + interval 1 day		)
+		order by license_date desc
+		limit #{ pageNum }, 10
+	</select>
+	
+    <select id="companyDetail" resultMap="companyResult"   parameterType="java.util.HashMap">
+	    <![CDATA[
+		select  
+			company_id,
+	 
+			business_registration_number,
+			company_name,
+			representative_name,
+	
+			zipcode,
+			roadAddress,
+			jibunAddress,
+			namujiAddress,
+			
+			business_type,
+			business_item,
+			corporation_registration_number,
+			industry_code,
+			industry_name,			          
+			telephone,
+			fax,
+			email,
+			license_number,
+	 		          
+			date_format(license_date,'%Y-%m-%d')  as license_date,
+			del_yn
+		from companytest
+
+		where company_id=#{company_id}
+    	]]>
+	</select>	
+	<update id="modifyCompany" parameterType="java.util.HashMap">
+	   update companytest
+			   <set>
+			      <if test=" company_id!='' and company_id!=null">
+			        company_id=#{company_id},
+			      </if>
+			      <if test=" goods_id!='' and goods_id!=null">
+			         goods_id=#{goods_id},
+			      </if>
+			       <if test=" business_registration_number!='' and business_registration_number!=null">
+			         business_registration_number=#{business_registration_number},
+			      </if>
+			      <if test=" company_name!='' and company_name!=null">
+			         company_name=#{company_name},
+			      </if>
+			      <if test=" representative_name!='' and representative_name!=null">
+			         representative_name=#{representative_name},
+			      </if>
+
+			      <if test=" zipcode!='' and zipcode!=null">
+			         zipcode=#{zipcode},
+			      </if>
+			      <if test=" roadAddress!='' and roadAddress!=null">
+			         roadAddress=#{roadAddress},
+			      </if>		
+			      <if test=" jibunAddress!='' and jibunAddress!=null">
+			         jibunAddress=#{jibunAddress},
+			      </if>
+			      <if test=" namujiAddress!='' and namujiAddress!=null">
+			      
+			         namujiAddress=#{namujiAddress, jdbcType=VARCHAR},
+			      </if>
+			      <if test=" business_type!='' and business_type!=null">
+			         business_type=#{business_type},
+			      </if>
+			      <if test=" business_item!='' and business_item!=null">
+			         business_item=#{business_item},
+			      </if>
+			      <if test=" corporation_registration_number!='' and corporation_registration_number!=null">
+			         corporation_registration_number=#{corporation_registration_number},
+			      </if>
+			      <if test=" industry_code!='' and industry_code!=null">
+			         industry_code=#{industry_code},
+			      </if>
+			      <if test=" telephone!='' and telephone!=null">
+			         telephone=#{telephone},
+			      </if>
+			      <if test=" fax!='' and fax!=null">
+			         fax=#{fax},
+			      </if>
+			      <if test=" email!='' and email!=null">
+			         email=#{email},
+			      </if>
+			      <if test=" license_number!='' and license_number!=null">
+			         license_number=#{license_number},
+			      </if>
+			      <if test=" license_date!='' and license_date!=null">
+			         license_date=#{license_date},
+			      </if>
+			      <if test=" del_yn!='' and del_yn!=null">
+			         del_yn=#{del_yn}
+			      </if>
+			   </set>
+		where 
+		company_id=#{company_id}
+	</update>		
+
+	<update id="modifyCompanyInfo" parameterType="java.util.HashMap">
+	   update companytest
+			   <set>
+			      <if test=" company_id!='' and company_id!=null">
+			        company_id=#{company_id},
+			      </if>
+			      <if test=" goods_id!='' and goods_id!=null">
+			         goods_id=#{goods_id},
+			      </if>
+			       <if test=" business_registration_number!='' and business_registration_number!=null">
+			         business_registration_number=#{business_registration_number},
+			      </if>
+			      <if test=" company_name!='' and company_name!=null">
+			         company_name=#{company_name},
+			      </if>
+			      <if test=" representative_name!='' and representative_name!=null">
+			         representative_name=#{representative_name},
+			      </if>
+			      <if test=" zipcode!='' and zipcode!=null">
+			         zipcode=#{zipcode},
+			      </if>
+			      <if test=" roadAddress!='' and roadAddress!=null">
+			         roadAddress=#{roadAddress},
+			      </if>		
+			      <if test=" jibunAddress!='' and jibunAddress!=null">
+			         jibunAddress=#{jibunAddress},
+			      </if>
+			      <if test=" namujiAddress!='' or namujiAddress!=null">
+			         namujiAddress=#{namujiAddress, jdbcType=VARCHAR},
+			      </if>
+			      <if test=" business_type!='' and business_type!=null">
+			         business_type=#{business_type},
+			      </if>
+			      <if test=" business_item!='' and business_item!=null">
+			         business_item=#{business_item},
+			      </if>
+			      <if test=" corporation_registration_number!='' and corporation_registration_number!=null">
+			         corporation_registration_number=#{corporation_registration_number},
+			      </if>
+			      <if test=" industry_code!='' and industry_code!=null">
+			         industry_code=#{industry_code},
+			      </if>
+			      <if test=" telephone!='' and telephone!=null">
+			         telephone=#{telephone},
+			      </if>
+			      <if test=" fax!='' and fax!=null">
+			         fax=#{fax},
+			      </if>
+			      <if test=" email!='' and email!=null">
+			         email=#{email},
+			      </if>
+			      <if test=" license_number!='' and license_number!=null">
+			         license_number=#{license_number},
+			      </if>
+			      <if test=" license_date!='' and license_date!=null">
+			         license_date=#{license_date},
+			      </if>
+			      <if test=" del_yn!='' and del_yn!=null">
+			         del_yn=#{del_yn}
+			      </if>
+			   </set>
+		where 
+		company_id=#{company_id}
+	</update>	
+	<insert id="addCompanyInfo" parameterType="java.util.Map"   >
+
+	    
+	    <![CDATA[
+		   insert into companytest(
+		                company_id, 
+		                business_registration_number,
+                    company_name,
+                    representative_name,
+                    zipcode,
+                    roadAddress,
+                    jibunAddress,
+                    namujiAddress,
+										business_type,
+										business_item,
+										corporation_registration_number,
+										industry_code,
+										industry_name,
+										telephone,
+										fax,
+										email,
+										license_number,
+										license_date,
+										del_yn )
+					  			values(
+					  			      #{company_id},
+					  			      #{business_registration_number},
+					  			      #{company_name},
+					  			      #{representative_name},
+		  			     
+					  			      #{zipcode },
+					  			      #{roadAddress },
+					  			      #{jibunAddress },
+					  			      #{namujiAddress },
+					  			      
+					  			      #{business_type},
+					  			      #{business_item},
+					  			      #{corporation_registration_number},
+					  			      #{industry_code},
+					  			      
+					  			      #{industry_name},
+					  			      #{telephone },
+					  			      #{fax },
+					  			      #{email },
+					  			      #{license_number },
+					  			      #{license_date},
+											
+									      #{del_yn}
+					 			 )
+		]]>
+	</insert> 
+	<delete id="deleteCompanyInfo" parameterType="String">
+	  delete from companytest
+	  where company_id=#{company_id}
+	</delete>
+</mapper>
+

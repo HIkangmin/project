@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  <typeAliases>
+    <typeAlias type="com.munbanggu.goods.vo.GoodsVO" alias="goodsVO" />
+    <typeAlias type="com.munbanggu.goods.vo.ImageFileVO" alias="imageFileVO" />
+    <typeAlias type="com.munbanggu.member.vo.MemberVO" alias="memberVO" />
+    <typeAlias type="com.munbanggu.cart.vo.CartVO" alias="cartVO" />
+    <typeAlias type="com.munbanggu.order.vo.OrderVO" alias="orderVO" />
+    <typeAlias type="com.munbanggu.mypage.vo.MyPageVO" alias="mypageVO" />
+    <typeAlias type="com.munbanggu.company.vo.CompanyVO" alias="companyVO" />
+    
+    <typeAlias type="com.munbanggu.common.vo.CommonSelectVO" alias="commonSelectVO" />
+    
+    <typeAlias type="com.munbanggu.customer.vo.NoticeVO" alias="noticeVO" />
+    <typeAlias type="com.munbanggu.customer.vo.BoardVO" alias="boardVO" />
+    <typeAlias type="com.munbanggu.customer.vo.QnaVO" alias="qnaVO" />
+    <typeAlias type="com.munbanggu.customer.vo.FaqVO" alias="faqVO" />
+    
+  </typeAliases>
+</configuration>
+

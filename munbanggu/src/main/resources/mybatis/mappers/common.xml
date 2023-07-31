@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 사용 추가시 필요한 페이지의 리절트 맵과 case를 추가 할 것 -->
+<mapper namespace="mapper.common"  >
+
+
+	<resultMap id="commonSearchResultMap" type="commonSelectVO" >
+		<result property="result_type" column="result_type" />
+		
+		<discriminator column="result_type" javaType="java.lang.String">
+	    	<case value="OrderVO"  resultType="OrderVO" />
+	    	<case value="MemberVO"  resultType="MemberVO" />
+	    	
+	    	<case value="QnaVO"  resultType="QnaVO" />
+	    	<case value="NoticeVO"  resultType="NoticeVO" />
+	    	<case value="FaqVO"  resultType="FaqVO" />
+	    	<case value="GoodsVO"  resultType="GoodsVO" />
+	    	<case value="CompanyVO"  resultType="CompanyVO" />
+	    	<case value="CartVO"  resultType="CartVO" />
+	    	<case value="MyPageVO"  resultType="MyPageVO" />
+	    	
+	    	
+	    	<case value="BoardVO"  resultType="BoardVO" />
+    	</discriminator>
+	</resultMap>	
+		
+		
+		
+	<!-- 범용 전체 칼럼 수 계산 쿼리 -->
+	<select id="commonCountSelect" resultType="int"
+		parameterType="java.util.HashMap">
+		SELECT COUNT(
+		<choose>
+			<when test="target_column == '' ||target_column == null || target_column == 'all' ">
+				*
+			</when>
+			<otherwise>
+				${ target_column }
+			</otherwise>
+		</choose>
+		)
+		from
+		${ target_table }
+		where  true
+		<choose>
+			<when test="target_column == '' ||target_column == null || target_column == 'all' ">
+				<foreach collection="search_type_list" item="item" open="and ( false " close=")" separator="">
+					|| ${item} </foreach>				
+			</when>
+			<otherwise>
+				#{ target_column }
+			</otherwise>
+		</choose>
+		like '%'|| #{search_word} || '%'
+		and ${ date_column } between
+		#{beginDate} and (#{endDate} + INTERVAL 1 DAY )
+
+	</select>
+
+
+<select id="commonSearchSelectList" resultMap="commonSearchResultMap" parameterType="java.util.HashMap">
+		SELECT *
+			, '${ result_type }'as result_type
+		from
+			${ target_table }
+		where true
+		<choose>
+			<when test="target_column == '' ||target_column == null || target_column == 'all' ">
+			<foreach collection="search_type_list" item="item" open="and ( false " close=")" separator="">
+					|| ${item}</foreach>
+			</when>
+			<otherwise>
+				#{ target_column }
+			</otherwise>
+		</choose>
+		like '%'|| #{search_word} || '%'
+		and ${ date_column } between
+		#{beginDate} and (#{endDate} + INTERVAL 1 DAY )		
+		order by ${date_column} desc
+		limit #{ pageNum }, 10
+		
+	</select> 
+	
+</mapper>
